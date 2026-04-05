@@ -1,0 +1,16 @@
+# Keil MDK-ARM 编译垃圾
+*.o
+*.d
+*.crf
+*.htm
+*.dep
+*.lst
+*.map
+*.hex
+*.axf
+*.build_log.htm
+*.uvguix.*
+*.scvd
+DebugConfig/
+JLinkLog.txt
+JLinkSettings.ini
