@@ -10,20 +10,20 @@
 uint8_t  ID1[Motor_Number]  = {1, 2, 3, 4};
 uint8_t  ACC1[Motor_Number] = {20, 20, 20, 20};
 int16_t  PST1[Motor_Number] = {2048, 2048, 2048, 2048};
-uint16_t TQE1[Motor_Number] = {10, 10, 10, 10};
-uint16_t SPD1[Motor_Number] = {50, 50, 50, 50};
+uint16_t TQE1[Motor_Number] = {20, 20, 20, 20};
+uint16_t SPD1[Motor_Number] = {20, 20, 20, 20};
 
 uint8_t  ID2[Motor_Number]  = {1, 2, 3, 4};
 uint8_t  ACC2[Motor_Number] = {20, 20, 20, 20};
 int16_t  PST2[Motor_Number] = {2048, 2048, 2048, 2048};
-uint16_t TQE2[Motor_Number] = {10, 10, 10, 10};
-uint16_t SPD2[Motor_Number] = {50, 50, 50, 50};
+uint16_t TQE2[Motor_Number] = {20, 20, 20, 20};
+uint16_t SPD2[Motor_Number] = {20, 20, 20, 20};
 
 uint8_t  ID3[Motor_Number]  = {1, 2, 3, 4};
 uint8_t  ACC3[Motor_Number] = {20, 20, 20, 20};
 int16_t  PST3[Motor_Number] = {2048, 2048, 2048, 2048};
-uint16_t TQE3[Motor_Number] = {10, 10, 10, 10};
-uint16_t SPD3[Motor_Number] = {50, 50, 50, 50};
+uint16_t TQE3[Motor_Number] = {20, 20, 20, 20};
+uint16_t SPD3[Motor_Number] = {20, 20, 20, 20};
 
 uint8_t usart1_transmit_buff[40]; // 发送同步控制指令时，4个舵机需要40个字节的内存
 uint8_t usart2_transmit_buff[40];

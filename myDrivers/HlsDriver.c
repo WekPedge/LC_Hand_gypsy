@@ -174,7 +174,7 @@ void HLS_CloseRubbishFeedback_BuffWrite(uint8_t ID, uint8_t *Transmit_Buff)
 	Transmit_Buff[5] = 0x08;
 	Transmit_Buff[6] = 0x00;
 	uint8_t checkSum = 0xFF;
-	for (uint8_t i = 2; i <=5; i++)
+	for (uint8_t i = 2; i <=6; i++)
 	{
 		checkSum -= Transmit_Buff[i];
 	}
@@ -198,7 +198,7 @@ void HLS_TorqueSwitch_BuffWrite(uint8_t ID, uint8_t *Transmit_Buff, uint8_t Mode
 	Transmit_Buff[5] = 0x28;
 	Transmit_Buff[6] = Mode;
 	uint8_t checkSum = 0xFF;
-	for (uint8_t i = 2; i <=5; i++)
+	for (uint8_t i = 2; i <=6; i++)
 	{
 		checkSum -= Transmit_Buff[i];
 	}
