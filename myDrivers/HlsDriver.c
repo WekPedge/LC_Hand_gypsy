@@ -205,8 +205,29 @@ void HLS_TorqueSwitch_BuffWrite(uint8_t ID, uint8_t *Transmit_Buff, uint8_t Mode
 	Transmit_Buff[7] = checkSum;
 }
 
-
-
+/**
+  * @brief  	控制EPROM锁
+	* @para 		ID：						标定舵机的ID
+	* @para 		Transmit_Buff：	发送缓冲区
+	* @para 		Mode：					锁开关
+  * @retval 	None
+  */
+void HLS_EpromSwitch_BuffWrite(uint8_t ID, uint8_t *Transmit_Buff, uint8_t Mode)
+{
+	Transmit_Buff[0] = 0xFF;
+	Transmit_Buff[1] = 0xFF;
+	Transmit_Buff[2] = ID;
+	Transmit_Buff[3] = 0x04;
+	Transmit_Buff[4] = 0x03;
+	Transmit_Buff[5] = 0x37;
+	Transmit_Buff[6] = Mode;
+	uint8_t checkSum = 0xFF;
+	for (uint8_t i = 2; i <=6; i++)
+	{
+		checkSum -= Transmit_Buff[i];
+	}
+	Transmit_Buff[7] = checkSum;
+}
 
 
 

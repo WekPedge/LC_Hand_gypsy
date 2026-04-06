@@ -21,7 +21,7 @@ void Motor_Control_Transmit(UART_HandleTypeDef *huart, uint8_t ID, int16_t Posit
 void Motor_CloseRubbishFeedback(UART_HandleTypeDef *huart, uint8_t* Transmit_Buff);
 void Motor_Switch_OutMode(UART_HandleTypeDef *huart, uint8_t* Transmit_Buff, uint8_t Mode);
 uint8_t Servo_Handle_FeedbackData(const uint8_t* ReceiveDat, uint8_t MotorNumber, Motor_Feedback_Data* motorArray);
-
+void Motor_EpromSwitch_OutMode(UART_HandleTypeDef *huart, uint8_t* Transmit_Buff, uint8_t Mode);
 
 
 

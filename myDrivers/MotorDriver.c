@@ -203,7 +203,22 @@ uint8_t Servo_Handle_FeedbackData(const uint8_t* ReceiveDat, uint8_t MotorNumber
 	return 0; // 硬件有 Error 报错，不更新数据
 }
 
-
+/**
+	* @brief  	指令：开关EPROM锁
+	* @para 		huart：					目标串口句柄
+	* @para 		Transmit_Buff：	发送缓冲区
+	* @para 		Mode：					输出模式   写0：关锁，掉电后数据保存；写1：开锁，掉电后数据不保存
+  * @retval 	None
+  */
+void Motor_EpromSwitch_OutMode(UART_HandleTypeDef *huart, uint8_t* Transmit_Buff, uint8_t Mode)
+{
+	for (uint8_t id = 1; id <= Motor_Number; id ++)
+	{
+		HLS_EpromSwitch_BuffWrite(id, Transmit_Buff, Mode);
+		USART_Transmit_DMA(huart, Transmit_Buff, 8);
+		osDelay(10);
+	}
+}
 
 
 

@@ -110,8 +110,8 @@ uint8_t CAN_Expand_Transmit(CAN_HandleTypeDef *hcan, uint32_t myExtId, uint8_t *
 	uint32_t TxMailbox;           // 用于记录包裹被扔进了哪个发送邮箱
 
 	// 配置发送参数
-	TxHeader.StdId = 0;              			 // 标准帧 ID (0x000 ~ 0x7FF)
-	TxHeader.ExtId = myExtId;           	 // 扩展帧 ID (这里不用，随便填)
+	TxHeader.StdId = 0;              			 // 标准帧 ID (这里不用，随便填)
+	TxHeader.ExtId = myExtId;           	 // 扩展帧 ID (29位)
 	TxHeader.IDE = CAN_ID_EXT;             // 标准帧 (CAN_ID_STD)
 	TxHeader.RTR = CAN_RTR_DATA;           // 告诉硬件这是数据帧，区分数据帧和遥控、错误、过载帧
 	TxHeader.DLC = 8;                      // 告诉硬件数据长度为 8 个字节

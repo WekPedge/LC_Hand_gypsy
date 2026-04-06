@@ -10,19 +10,19 @@
 uint8_t  ID1[Motor_Number]  = {1, 2, 3, 4};
 uint8_t  ACC1[Motor_Number] = {20, 20, 20, 20};
 int16_t  PST1[Motor_Number] = {2048, 2048, 2048, 2048};
-uint16_t TQE1[Motor_Number] = {20, 20, 20, 20};
+uint16_t TQE1[Motor_Number] = {200, 200, 200, 200};
 uint16_t SPD1[Motor_Number] = {20, 20, 20, 20};
 
 uint8_t  ID2[Motor_Number]  = {1, 2, 3, 4};
 uint8_t  ACC2[Motor_Number] = {20, 20, 20, 20};
 int16_t  PST2[Motor_Number] = {2048, 2048, 2048, 2048};
-uint16_t TQE2[Motor_Number] = {20, 20, 20, 20};
+uint16_t TQE2[Motor_Number] = {200, 200, 200, 200};
 uint16_t SPD2[Motor_Number] = {20, 20, 20, 20};
 
 uint8_t  ID3[Motor_Number]  = {1, 2, 3, 4};
 uint8_t  ACC3[Motor_Number] = {20, 20, 20, 20};
 int16_t  PST3[Motor_Number] = {2048, 2048, 2048, 2048};
-uint16_t TQE3[Motor_Number] = {20, 20, 20, 20};
+uint16_t TQE3[Motor_Number] = {200, 200, 200, 200};
 uint16_t SPD3[Motor_Number] = {20, 20, 20, 20};
 
 uint8_t usart1_transmit_buff[40]; // 发送同步控制指令时，4个舵机需要40个字节的内存
@@ -58,10 +58,21 @@ void TaskUsartTrans(void *argument)
 	Motor_Switch_OutMode(&huart1, usart1_transmit_buff, 1);
 	Motor_Switch_OutMode(&huart2, usart2_transmit_buff, 1);
 	Motor_Switch_OutMode(&huart3, usart3_transmit_buff, 1);
-	// 标定
+//	// 开锁 掉点保存
+//	Motor_EpromSwitch_OutMode(&huart1, usart1_transmit_buff, 0);
+//	Motor_EpromSwitch_OutMode(&huart2, usart2_transmit_buff, 0);
+//	Motor_EpromSwitch_OutMode(&huart3, usart3_transmit_buff, 0);
+//	osDelay(100);
+//	// 标点
 //	Motor_PositionCalibration_Transmit(&huart1, usart1_transmit_buff);
 //	Motor_PositionCalibration_Transmit(&huart2, usart2_transmit_buff);
 //	Motor_PositionCalibration_Transmit(&huart3, usart3_transmit_buff);
+//	osDelay(100);
+//	// 关锁
+//	Motor_EpromSwitch_OutMode(&huart1, usart1_transmit_buff, 1);
+//	Motor_EpromSwitch_OutMode(&huart2, usart2_transmit_buff, 1);
+//	Motor_EpromSwitch_OutMode(&huart3, usart3_transmit_buff, 1);
+	osDelay(100);
 	
   for(;;)
   {
@@ -70,11 +81,11 @@ void TaskUsartTrans(void *argument)
 		Motor_SyncControl_Transmit(&huart2,	ID2, ACC2, PST2, TQE2, SPD2, usart2_transmit_buff);
 		Motor_SyncControl_Transmit(&huart3,	ID3, ACC3, PST3, TQE3, SPD3, usart3_transmit_buff);
 		// 请求返回数据
-		osDelay(250);
+		osDelay(10);
 		Motor_DataSyncRequest_Transmit(&huart1, ID1, usart1_transmit_buff);
 		Motor_DataSyncRequest_Transmit(&huart2, ID2, usart2_transmit_buff);
 		Motor_DataSyncRequest_Transmit(&huart3, ID3, usart3_transmit_buff);
-		osDelay(250);
+		osDelay(10);
 		
 		dicknumber++;
   }
