@@ -115,6 +115,17 @@ const osMessageQueueAttr_t Queue_CanPack_attributes = {
   .mq_mem = &Queue_CanPackBuffer,
   .mq_size = sizeof(Queue_CanPackBuffer)
 };
+/* Definitions for Queue_CanRxMsg */
+osMessageQueueId_t Queue_CanRxMsgHandle;
+uint8_t Queue_CanRxMsgBuffer[ 3 * 24 ];
+osStaticMessageQDef_t Queue_CanRxMsgControlBlock;
+const osMessageQueueAttr_t Queue_CanRxMsg_attributes = {
+  .name = "Queue_CanRxMsg",
+  .cb_mem = &Queue_CanRxMsgControlBlock,
+  .cb_size = sizeof(Queue_CanRxMsgControlBlock),
+  .mq_mem = &Queue_CanRxMsgBuffer,
+  .mq_size = sizeof(Queue_CanRxMsgBuffer)
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -154,6 +165,9 @@ void MX_FREERTOS_Init(void) {
   /* Create the queue(s) */
   /* creation of Queue_CanPack */
   Queue_CanPackHandle = osMessageQueueNew (3, 13, &Queue_CanPack_attributes);
+
+  /* creation of Queue_CanRxMsg */
+  Queue_CanRxMsgHandle = osMessageQueueNew (3, 24, &Queue_CanRxMsg_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */

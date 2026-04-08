@@ -200,6 +200,21 @@
           <WinNumber>1</WinNumber>
           <ItemText>dicknumber,0x0A</ItemText>
         </Ww>
+        <Ww>
+          <count>8</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>PST1,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>9</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>PST2,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>10</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>PST3,0x0A</ItemText>
+        </Ww>
       </WatchWindow1>
       <WatchWindow2>
         <Ww>
@@ -221,6 +236,11 @@
           <count>3</count>
           <WinNumber>2</WinNumber>
           <ItemText>uart3_Motors,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>4</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>CAN_Data_frmPack,0x0A</ItemText>
         </Ww>
       </WatchWindow2>
       <Tracepoint>

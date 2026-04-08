@@ -4,6 +4,7 @@
 
 #include "main.h"
 #include <stdint.h>
+#include "bsp_can.h"
 
 // 打包后的 CAN 帧数据
 typedef struct {
@@ -14,7 +15,7 @@ typedef struct {
 
 CAN_PackedPacket Pack_Servo_Positions(uint32_t myID, uint16_t s1, uint16_t s2, uint16_t s3, uint16_t s4, uint16_t s5, uint16_t s6);
 
-
+void CAN_Data_Unpack(CAN_Pack_Struct* canPack);
 
 
 

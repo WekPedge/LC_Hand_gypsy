@@ -129,19 +129,6 @@ uint8_t CAN_Expand_Transmit(CAN_HandleTypeDef *hcan, uint32_t myExtId, uint8_t *
 }
 
 /**
-  * @brief  can数据解包
-  * @param  canPack：can数据包
-  */
-void CAN_Data_Unpack(CAN_Pack_Struct* canPack)
-{
-	uint32_t extID 		= canPack->Extend_ID;
-	uint8_t  Data[8]  = {0};
-	memcpy(Data, canPack->Data, 8);
-	/* 其他解包逻辑 */
-	/* ... */
-}
-
-/**
   * @brief  CAN RX FIFO0 接收中断回调函数 (拆快递的地方)
   * @param  hcan: CAN 句柄
   */

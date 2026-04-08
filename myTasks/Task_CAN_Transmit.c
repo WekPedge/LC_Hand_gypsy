@@ -54,9 +54,9 @@ void TaskCANTrans(void *argument)
 		Motor1_6 = Pack_Servo_Positions(0x1FE, Motor_Position_Data[0], Motor_Position_Data[1], Motor_Position_Data[2], Motor_Position_Data[3], Motor_Position_Data[4], Motor_Position_Data[5]);
 		CAN_Expand_Transmit(&hcan, Motor1_6.ExtID, Motor1_6.Data);
 		Motor7_12 = Pack_Servo_Positions(0x1FF, Motor_Position_Data[6], Motor_Position_Data[7], Motor_Position_Data[8], Motor_Position_Data[9], Motor_Position_Data[10], Motor_Position_Data[11]);
-		CAN_Expand_Transmit(&hcan, Motor1_6.ExtID, Motor1_6.Data);
+		CAN_Expand_Transmit(&hcan, Motor7_12.ExtID, Motor7_12.Data);
 		
-    osDelay(1);
+    osDelay(5);
   }
 }
 

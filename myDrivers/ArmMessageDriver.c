@@ -2,7 +2,10 @@
 #include "bsp_can.h"
 #include "can.h"
 #include "cmsis_os2.h"
+#include <string.h>
 
+
+extern osMessageQueueId_t Queue_CanRxMsgHandle;
 
 /**
  * @brief  将6个舵机位置(12位)压缩至 29位ID 和 8字节数据包中
@@ -23,7 +26,6 @@ CAN_PackedPacket Pack_Servo_Positions(uint32_t myID, uint16_t s1, uint16_t s2, u
 
     // ---------------------------------------------------------
     // 2. 打包 8 字节数据区 (共需存放: 4个12位 + 1个8位 = 56位 = 7字节)
-    // 采用底层极速的小端移位拼接法
     // ---------------------------------------------------------
     
     // 【字节 1~3】：存放 舵机1(12位) 和 舵机2(12位)
@@ -61,7 +63,50 @@ CAN_PackedPacket Pack_Servo_Positions(uint32_t myID, uint16_t s1, uint16_t s2, u
 }
 
 
+/**
+  * @brief  can数据解包
+  * @param  canPack：can数据包
+  */
+void CAN_Data_Unpack(CAN_Pack_Struct* canPack)
+{
+	static uint16_t Hand_Positions[12] = {0};
+	uint32_t extId 			= canPack->Extend_ID;
+	uint8_t  RxData[8]  = {0};
+	memcpy(RxData, canPack->Data, 8);
+	static uint8_t transmit_sign = 0;
+	
+	uint32_t id_prefix = (extId >> 16) & 0x1FFF;
 
+	if (id_prefix == 0x1FE) 
+	{
+		// --- 直接解包前 6 个舵机 (放进 0~5) ---
+		Hand_Positions[0] = RxData[0] | ((RxData[1] & 0x0F) << 8);
+		Hand_Positions[1] = ((RxData[1] >> 4) & 0x0F) | (RxData[2] << 4);
+		Hand_Positions[2] = RxData[3] | ((RxData[4] & 0x0F) << 8);
+		Hand_Positions[3] = ((RxData[4] >> 4) & 0x0F) | (RxData[5] << 4);
+		Hand_Positions[4] = RxData[6] | ((extId & 0x0F) << 8);
+		Hand_Positions[5] = (extId >> 4) & 0x0FFF;
+		transmit_sign |= 0x01;
+	}
+	
+	else if (id_prefix == 0x1FF) 
+	{
+		// --- 直接解包后 6 个舵机 (放进 6~11) ---
+		Hand_Positions[6] = RxData[0] | ((RxData[1] & 0x0F) << 8);
+		Hand_Positions[7] = ((RxData[1] >> 4) & 0x0F) | (RxData[2] << 4);
+		Hand_Positions[8] = RxData[3] | ((RxData[4] & 0x0F) << 8);
+		Hand_Positions[9] = ((RxData[4] >> 4) & 0x0F) | (RxData[5] << 4);
+		Hand_Positions[10] = RxData[6] | ((extId & 0x0F) << 8);
+		Hand_Positions[11] = (extId >> 4) & 0x0FFF;
+		transmit_sign |= 0x02;
+	}
+	
+	if (transmit_sign == 0x03)
+	{
+		osMessageQueuePut(Queue_CanRxMsgHandle, Hand_Positions, 0, 0); // 入队
+		transmit_sign = 0;
+	}
+}
 
 
 

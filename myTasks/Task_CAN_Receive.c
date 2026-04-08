@@ -14,8 +14,11 @@ void TaskCANRec(void *argument)
 {
   for(;;)
   {
-    osMessageQueueGet(Queue_CanPackHandle, &CAN_Data_frmPack, NULL, osWaitForever);
-		CAN_Data_Unpack(&CAN_Data_frmPack);
+    osStatus_t QueueSign = osMessageQueueGet(Queue_CanPackHandle, &CAN_Data_frmPack, NULL, osWaitForever);
+		if (QueueSign == osOK)
+		{
+			CAN_Data_Unpack(&CAN_Data_frmPack); // 解包好后会将从上位机收到的12个舵机的数据直接放进队列，在串口发送任务中取出来
+		}
   }
 }
 
